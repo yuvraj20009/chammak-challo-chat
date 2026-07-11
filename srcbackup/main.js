@@ -60,11 +60,11 @@ document
 
     localStorage.setItem("username", username);
 
-    const roomCode = await createRoom();
+    const room = await createRoom();
 
-    document.body.innerHTML = Chat(roomCode);
+    document.body.innerHTML = Chat(room);
 
-    startChat(roomCode);
+    startChat(room);
 
 });
 
@@ -97,10 +97,8 @@ document
 
     }
 
-    const roomCode = result.room;
+    document.body.innerHTML = Chat(result.room);
 
-    document.body.innerHTML = Chat(roomCode);
-
-    startChat(roomCode);
+    startChat(result.room);
 
 });

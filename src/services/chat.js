@@ -2,7 +2,8 @@ import {
     sendVideoInvite,
     listenVideoInvite,
     acceptVideoInvite,
-    listenVideoAccepted
+    listenVideoAccepted,
+    clearVideoInvite
 } from "./videoSync";
 import { enableSwipeReply } from "./swipeReply";
 import { uploadImage } from "./uploadImage";
@@ -337,8 +338,9 @@ listenVideoAccepted(roomCode, () => {
         "*"
     );
 
-});
+    clearVideoInvite(roomCode);
 
+});
 
 
 

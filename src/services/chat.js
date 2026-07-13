@@ -1,5 +1,11 @@
+import { enableSwipeReply } from "./swipeReply";
 import { uploadImage } from "./uploadImage";
-import { sendMessage, listenMessages, markMessageAsSeen } from "./message";
+import {
+    sendMessage,
+    listenMessages,
+    markMessageAsSeen,
+    editMessage
+} from "./message";
 
 import {
     joinPresence,
@@ -14,8 +20,8 @@ import {
 } from "./typing";
 
 import { renderMessages } from "./renderMessages";
-import { renderOnline } from "./renderOnline";
-import { renderTyping } from "./renderTyping";
+import { renderOnline } from "../ui/renderOnline";
+import { renderTyping } from "../ui/renderTyping";
 
 import { enableImageViewer } from "./imageViewer";
 import { enableAdvancedReactions } from "./advancedReactions";
@@ -57,8 +63,47 @@ export function startChat(roomCode) {
 
     const typingDiv =
         document.getElementById("typingIndicator");
+let editingMessageId = null;
+let replyingTo = null;
+let startX = 0;
 
+window.addEventListener("startReply", (e) => {
 
+    replyingTo = e.detail;
+
+    const actionBar = document.getElementById("actionBar");
+    const actionTitle = document.getElementById("actionTitle");
+    const actionPreview = document.getElementById("actionPreview");
+
+    actionTitle.innerText = "Replying to " + e.detail.senderName;
+    actionPreview.innerText = e.detail.text || "📷 Photo";
+
+    actionBar.classList.remove("hidden");
+
+});
+
+window.addEventListener("startReply", (e) => {
+
+    replyingTo = e.detail;
+
+    messageInput.placeholder =
+        "Replying to " + replyingTo.sender;
+
+    messageInput.focus();
+
+});
+window.addEventListener("startEdit", (e) => {
+
+    editingMessageId = e.detail.id;
+
+    messageInput.value = e.detail.text;
+
+    messageInput.placeholder = "Editing message...";
+
+    messageInput.focus();
+
+});
+ 
     console.log("👤 Username:", myName);
     console.log("⌨️ Typing div:", typingDiv);
 
@@ -90,7 +135,30 @@ export function startChat(roomCode) {
         roomCode,
         myName
     );
+enableSwipeReply((message) => {
 
+    replyingTo = message;
+
+    const actionBar =
+        document.getElementById("actionBar");
+
+    const actionTitle =
+        document.getElementById("actionTitle");
+
+    const actionPreview =
+        document.getElementById("actionPreview");
+
+    actionTitle.innerText =
+        "Replying to " + message.sender;
+
+    actionPreview.innerText =
+        message.text || "[Image]";
+
+    actionBar.classList.remove("hidden");
+
+    messageInput.focus();
+
+});
 
 
 
@@ -253,75 +321,95 @@ export function startChat(roomCode) {
 
 
 
-    // ---------- SEND MESSAGE ----------
+  // ---------- SEND MESSAGE ----------
 
+async function send() {
 
-    async function send(){
+    const text = messageInput.value.trim();
 
+    if (!text) return;
 
-        const text =
-        messageInput.value.trim();
+    // EDIT MODE
+    if (editingMessageId) {
 
+        await editMessage(
 
-
-        if(!text) return;
-
-
-
-        await sendMessage(
             roomCode,
-            text,
-            myName
+
+            editingMessageId,
+
+            text
+
         );
 
+        editingMessageId = null;
 
+        messageInput.placeholder = "Type a message...";
 
-        stopTyping(
-            roomCode,
-            myName
-        );
-
-
-
-        messageInput.value="";
+        messageInput.value = "";
 
         messageInput.focus();
 
+        return;
 
     }
 
+    // NORMAL MESSAGE
 
+   await sendMessage(
+    roomCode,
+    text,
+    myName,
+    null,
+    replyingTo
+);
 
+replyingTo = null;
 
+document
+    .getElementById("actionBar")
+    .classList.add("hidden");
+replyingTo = null;
 
-    sendBtn.addEventListener(
-        "click",
-        send
+messageInput.placeholder = "Type a message...";
+
+    stopTyping(
+
+        roomCode,
+
+        myName
+
     );
 
+    messageInput.value = "";
 
+    messageInput.focus();
 
-    messageInput.addEventListener(
-        "keydown",
-        (e)=>{
+}
 
+sendBtn.addEventListener(
 
-            if(e.key==="Enter"){
+    "click",
 
-                send();
+    send
 
-            }
+);
 
+messageInput.addEventListener(
+
+    "keydown",
+
+    (e) => {
+
+        if (e.key === "Enter") {
+
+            send();
 
         }
-    );
 
+    }
 
-
-
-
-
-
+);
     // ---------- IMAGE UPLOAD ----------
 
 
@@ -416,7 +504,40 @@ export function startChat(roomCode) {
                 messages,
                 myName
             );
+document.querySelectorAll(".message").forEach((message) => {
 
+    let startX = 0;
+
+    message.addEventListener("touchstart", (e) => {
+
+        startX = e.touches[0].clientX;
+
+    });
+
+    message.addEventListener("touchend", (e) => {
+
+        const diff =
+            e.changedTouches[0].clientX - startX;
+
+        if (Math.abs(diff) > 70) {
+
+            window.dispatchEvent(
+                new CustomEvent("startReply", {
+
+                    detail: {
+                        id: message.dataset.id,
+                        senderName: message.dataset.sender,
+                        text: message.querySelector(".text")?.innerText || ""
+                    }
+
+                })
+            );
+
+        }
+
+    });
+
+});
 
 
             messagesDiv.scrollTop =

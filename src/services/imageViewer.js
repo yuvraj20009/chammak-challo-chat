@@ -1,79 +1,46 @@
 export function enableImageViewer() {
 
     const viewer =
-
-        document.getElementById(
-            "imageViewer"
-        );
+        document.getElementById("imageViewer");
 
     const image =
+        document.getElementById("viewerImage");
 
-        document.getElementById(
-            "viewerImage"
-        );
+    // Viewer doesn't exist yet
+    if (!viewer || !image) {
+        return;
+    }
 
-    document.addEventListener(
+    document.addEventListener("click", (e) => {
 
-        "click",
+        if (e.target.classList.contains("chatImage")) {
 
-        (e) => {
+            image.src = e.target.dataset.image;
 
-            if (
-
-                e.target.classList.contains(
-                    "chatImage"
-                )
-
-            ) {
-
-                image.src =
-
-                    e.target.dataset.image;
-
-                viewer.classList.add(
-                    "show"
-                );
-
-            }
+            viewer.classList.add("show");
 
         }
 
-    );
+    });
 
-    viewer.addEventListener(
+    viewer.addEventListener("click", (e) => {
 
-        "click",
+        if (e.target === viewer) {
 
-        (e) => {
-
-            if (e.target === viewer) {
-
-                viewer.classList.remove(
-                    "show"
-                );
-
-            }
+            viewer.classList.remove("show");
 
         }
 
-    );
+    });
 
-    document.addEventListener(
+    document.addEventListener("keydown", (e) => {
 
-        "keydown",
+        if (e.key === "Escape") {
 
-        (e) => {
-
-            if (e.key === "Escape") {
-
-                viewer.classList.remove(
-                    "show"
-                );
-
-            }
+            viewer.classList.remove("show");
 
         }
 
-    );
+    });
 
 }

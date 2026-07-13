@@ -143,9 +143,11 @@ function showMenu(message, roomCode){
     `;
 
     // FORCE the menu to be visible
-    menu.style.position = "fixed";
-    menu.style.left = "200px";
-    menu.style.top = "200px";
+const rect = message.getBoundingClientRect();
+
+menu.style.position = "fixed";
+menu.style.left = rect.left + rect.width/2 - 60 + "px";
+menu.style.top = rect.bottom + 8 + "px";
     menu.style.zIndex = "999999";
     menu.style.display = "block";
     menu.style.background = "#171717";
@@ -169,44 +171,43 @@ function showMenu(message, roomCode){
 
     };
 
-    document.getElementById("editMessage").onclick = () => {
+   document.getElementById("editMessage").onclick = () => {
 
-        const text = message.querySelector(".text");
+    window.dispatchEvent(
 
-        const oldText = text.innerText;
+        new CustomEvent("startEdit", {
 
-        text.innerHTML = `
-            <div class="editArea">
-                <input class="editMessageInput" value="${oldText}">
-                <button class="saveEdit">✅</button>
-            </div>
-        `;
+            detail: {
 
-        const input = text.querySelector(".editMessageInput");
+                id: message.dataset.id,
 
-        input.focus();
+                text: message.querySelector(".text").innerText
 
-        text.querySelector(".saveEdit").onclick = async () => {
+            }
 
-            await editMessage(
-                roomCode,
-                message.dataset.id,
-                input.value.trim()
-            );
+        })
 
-        };
+    );
 
-        menu.remove();
+    menu.remove();
 
-    };
+};
+   setTimeout(() => {
+    document.addEventListener("mousedown", closeOutside);
+},100);
+}function closeOutside(e){
 
-    setTimeout(() => {
+    const menu = document.getElementById("contextMenu");
 
-        document.addEventListener(
-            "click",
-            closeOutside
-        );
+    if(!menu) return;
 
-    }, 100);
+    if(menu.contains(e.target)) return;
+
+    menu.remove();
+
+   document.removeEventListener(
+    "mousedown",
+    closeOutside
+);
 
 }

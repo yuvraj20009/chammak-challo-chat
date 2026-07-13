@@ -1,48 +1,139 @@
-// Remove this line if it exists:
-// export { startChat };
-
-// Keep only this export:
 export function Chat(roomCode) {
+
     return `
-        <div class="chat">
-            <div class="chatHeader">
-                <div class="chatTitle">chammakchallo</div>
-                <div class="headerBottom">
-                    <div class="roomCode">Kamra Code: ${roomCode}</div>
-                    <div class="headerButtons">
-                        <button id="copyBtn" title="Copy room code">📋</button>
-                        <button id="leaveBtn" title="Leave chat">🚪</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="messages">
-                <div class="empty">No messages yet...</div>
-            </div>
+<div class="chat">
 
-            <div id="onlineCount"></div>
-            <div id="typingIndicator"></div>
+    <div class="chatHeader">
 
-            <div class="chatInput">
-                <input
-                    id="messageInput"
-                    placeholder="Type a message..."
-                    autocomplete="off"
-                />
-                <button id="imageBtn">📷</button>
-                <button id="sendBtn">Send</button>
-            </div>
+        <div class="chatTitle">
 
-            <input
-                id="imageInput"
-                type="file"
-                accept="image/*"
-                style="display: none;"
-            />
+            ❤️ ChammakChallo Chat
 
-            <div class="imageViewer" id="imageViewer">
-                <img id="viewerImage" />
-            </div>
         </div>
-    `;
+
+        <div class="headerBottom">
+
+            <div>
+
+                <div class="roomCode">
+
+                    Kamra: ${roomCode}
+
+                </div>
+
+                <div
+                    id="onlineCount"
+                    class="onlineCount"
+                >
+
+                    🟡 Waiting for someone...
+
+                </div>
+
+            </div>
+
+            <div class="headerButtons">
+
+                <button id="copyBtn">
+
+                    📋
+
+                </button>
+
+                <button id="leaveBtn">
+
+                    🚪
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="messages"
+    ></div>
+
+    <div
+        id="typingIndicator"
+        class="typingIndicator"
+    ></div>
+
+    <!-- EDIT / REPLY BAR -->
+
+    <div
+        id="actionBar"
+        class="actionBar hidden"
+    >
+
+        <div class="actionContent">
+
+            <div
+                id="actionTitle"
+                class="actionTitle"
+            >
+
+            </div>
+
+            <div
+                id="actionPreview"
+                class="actionPreview"
+            >
+
+            </div>
+
+        </div>
+
+        <button
+            id="cancelAction"
+            class="cancelAction"
+        >
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <div class="chatInput">
+
+        <button
+            id="imageBtn"
+            class="imageBtn"
+        >
+
+            📷
+
+        </button>
+
+        <input
+            id="imageInput"
+            type="file"
+            accept="image/*"
+            hidden
+        />
+
+        <input
+            id="messageInput"
+            placeholder="Type a message..."
+        />
+
+        <button
+            id="sendBtn"
+            class="sendBtn"
+        >
+
+            ➤
+
+        </button>
+
+    </div>
+
+</div>
+
+`;
+
 }

@@ -860,10 +860,10 @@ emoji-picker {
 
 
 
-#/* ===== CLEAN MESSAGE MENU ===== */
+/* ===== CLEAN MESSAGE MENU ===== */
 
 
-#contextMenu{
+contextMenu{
 
     position:fixed;
 
@@ -1020,4 +1020,47 @@ emoji-picker {
 
     font-style:italic;
 
+}.actionBar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:12px 16px;
+
+    background:#1a1a1a;
+
+    border-top:1px solid #333;
+}
+
+.actionBar.hidden{
+    display:none;
+}
+
+.actionContent{
+    display:flex;
+    flex-direction:column;
+}
+
+.actionTitle{
+    color:#ff2f68;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.actionPreview{
+    color:#bbb;
+    font-size:13px;
+}
+
+.cancelAction{
+
+    width:40px !important;
+    height:40px !important;
+    margin:0 !important;
+
+    border:none;
+    border-radius:50%;
+
+    background:#333;
+    color:white;
 }

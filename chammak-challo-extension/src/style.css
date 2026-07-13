@@ -88,24 +88,37 @@ background:#ff2f68;
 color:white;
 cursor:pointer;
 font-size:18px;
-}#cc-frame{
+#cc-frame{
     width:100%;
     height:100%;
+    flex:1;
+
     border:none;
-    background:#111;
+
+    display:block;
+
+    background:#0b0b0b;
 }
 
 #cc-chat-panel{
     position:fixed;
     top:0;
     right:0;
-    width:380px;
+
+    width:430px;
+    max-width:100vw;
     height:100vh;
-    background:#111;
-    z-index:999999999;
+
     display:flex;
     flex-direction:column;
-    box-shadow:-10px 0 25px rgba(0,0,0,.4);
+
+    overflow:hidden;
+
+    background:#0b0b0b;
+
+    z-index:999999999;
+
+    box-shadow:-8px 0 25px rgba(0,0,0,.35);
 }
 
 #cc-header{

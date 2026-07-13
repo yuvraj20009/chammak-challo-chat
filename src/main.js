@@ -9,7 +9,7 @@ const extensionMode =
     new URLSearchParams(window.location.search).get("extension") === "true";
 
 document.body.innerHTML = `
-<div class="container ${extensionMode ? "extension-mode" : ""}">
+<div class="${extensionMode ? "extension-mode" : "container"}">
 
     <div class="logo">
         chammakchallo

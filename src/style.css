@@ -1064,63 +1064,59 @@ contextMenu{
     background:#333;
     color:white;
 }/* ===========================
- /* =====================================================
+ /* ==========================
    EXTENSION MODE
-===================================================== */
-
+========================== */
 .extension-mode{
+
     width:100%;
-    min-height:100vh;
+    height:100%;
+
+    min-height:100%;
 
     display:flex;
     flex-direction:column;
+
     justify-content:center;
 
-    padding:28px;
+    padding:14px;
 
-    box-sizing:border-box;
+    overflow:hidden;
 }
 
-.extension-mode .logo{
-    font-size:38px;
-    margin-bottom:20px;
-}
+.extension-mode .container{
 
-.extension-mode .logo span{
-    font-size:14px;
-    letter-spacing:5px;
-}
-
-.extension-mode h1{
-    font-size:30px;
-    line-height:1.25;
-    margin-bottom:12px;
-}
-
-.extension-mode p{
-    font-size:16px;
-    margin-top:0;
-    margin-bottom:22px;
-    text-align:center;
-}
-
-.extension-mode input{
     width:100%;
-    height:54px;
-    margin-top:14px;
+    height:100%;
 
-    font-size:17px;
+}
+/* ==========================
+   CHAT INSIDE EXTENSION
+========================== */
 
-    border-radius:14px;
+.extension-chat{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
 }
 
-.extension-mode button{
+.extension-chat .messages{
+
+    flex:1;
+    overflow-y:auto;
+
+}html,
+body{
+
     width:100%;
-    height:54px;
+    height:100%;
 
-    margin-top:14px;
+    overflow:hidden;
 
-    border-radius:14px;
-
-    font-size:18px;
 }

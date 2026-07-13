@@ -1,3 +1,9 @@
+import {
+    sendVideoInvite,
+    listenVideoInvite,
+    acceptVideoInvite,
+    listenVideoAccepted
+} from "./videoSync";
 import { enableSwipeReply } from "./swipeReply";
 import { uploadImage } from "./uploadImage";
 import {
@@ -26,7 +32,10 @@ import { renderTyping } from "../ui/renderTyping";
 import { enableImageViewer } from "./imageViewer";
 import { enableAdvancedReactions } from "./advancedReactions";
 import { enableContextMenu } from "./contextMenu";
-
+import {
+    sendSyncRequest,
+    listenSyncRequest
+} from "./sync";
 
 export function startChat(roomCode) {
 
@@ -49,11 +58,14 @@ export function startChat(roomCode) {
     const imageInput =
         document.getElementById("imageInput");
 
-    const copyBtn =
-        document.getElementById("copyBtn");
+  const copyBtn =
+    document.getElementById("copyBtn");
 
-    const leaveBtn =
-        document.getElementById("leaveBtn");
+const syncBtn =
+    document.getElementById("syncBtn");
+
+const leaveBtn =
+    document.getElementById("leaveBtn");
 
     const messagesDiv =
         document.querySelector(".messages");
@@ -183,7 +195,10 @@ enableSwipeReply((message) => {
 
         }
     );
-
+listenSyncRequest(
+    roomCode,
+    myName
+);
 
 
 
@@ -277,8 +292,52 @@ enableSwipeReply((message) => {
         );
 
     }
+// ---------- VIDEO SYNC ----------
 
+if (syncBtn) {
 
+    syncBtn.addEventListener("click", () => {
+
+        sendVideoInvite(
+            roomCode,
+            myName
+        );
+
+        alert("📺 Sync request sent!");
+
+    });
+
+}
+
+listenVideoInvite(roomCode, (invite) => {
+
+    if (!invite) return;
+
+    if (invite.sender === myName) return;
+
+    const accepted = confirm(
+        `${invite.sender} wants to sync the movie.\n\nAccept?`
+    );
+
+    if (!accepted) return;
+
+    acceptVideoInvite(roomCode);
+
+});
+
+listenVideoAccepted(roomCode, () => {
+
+    alert("🎬 Video sync started!");
+
+    window.postMessage(
+        {
+            type: "START_VIDEO_SYNC",
+            roomCode
+        },
+        "*"
+    );
+
+});
 
 
 

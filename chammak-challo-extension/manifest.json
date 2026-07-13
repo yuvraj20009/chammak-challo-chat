@@ -23,9 +23,9 @@
       "matches": [
         "<all_urls>"
       ],
-      "js": [
-        "dist/content.js"
-      ],
+   "js": [
+  "dist/content.js"
+],
       "css": [
         "dist/content.css"
       ],

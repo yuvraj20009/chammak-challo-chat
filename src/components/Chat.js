@@ -2,8 +2,8 @@ export function Chat(roomCode) {
 
     return `
 
-<div class="chat">
-
+<div class="${window.location.search.includes("extension=true") ? "chat extension-chat" : "chat"}">
+  
     <div class="chatHeader">
 
         <div class="chatTitle">
@@ -33,22 +33,27 @@ export function Chat(roomCode) {
 
             </div>
 
-            <div class="headerButtons">
+           <div class="headerButtons">
 
-                <button id="copyBtn">
+    <button id="copyBtn">
 
-                    📋
+        📋
 
-                </button>
+    </button>
 
-                <button id="leaveBtn">
+    <button id="syncBtn">
 
-                    🚪
+        🎬
 
-                </button>
+    </button>
 
-            </div>
+    <button id="leaveBtn">
 
+        🚪
+
+    </button>
+
+</div>
         </div>
 
     </div>

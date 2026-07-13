@@ -5,8 +5,11 @@ import { startChat } from "./services/chat";
 import { createRoom } from "./services/room";
 import { joinRoom } from "./services/joinRoom";
 
+const extensionMode =
+    new URLSearchParams(window.location.search).get("extension") === "true";
+
 document.body.innerHTML = `
-<div class="container">
+<div class="container ${extensionMode ? "extension-mode" : ""}">
 
     <div class="logo">
         chammakchallo

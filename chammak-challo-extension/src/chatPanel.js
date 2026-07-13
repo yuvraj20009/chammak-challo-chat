@@ -1,5 +1,4 @@
 export function createChatPanel() {
-
     if (document.getElementById("cc-chat-panel")) return;
 
     const panel = document.createElement("div");
@@ -8,32 +7,20 @@ export function createChatPanel() {
 
     panel.innerHTML = `
         <div id="cc-header">
-            <span>💬 Chammak Challo</span>
+            <span>Chammak Challo</span>
             <button id="cc-close">✕</button>
         </div>
 
-        <div id="cc-messages">
-            Welcome to Chammak Challo 🚀
-        </div>
-
-        <div id="cc-input-area">
-
-            <input
-                id="cc-message"
-                placeholder="Type a message..."
-            />
-
-            <button id="cc-send">
-                ➤
-            </button>
-
-        </div>
+        <iframe
+            id="cc-frame"
+            src="https://chammak-challo-chat.vercel.app/?extension=true"
+            allow="clipboard-read; clipboard-write"
+        ></iframe>
     `;
 
     document.body.appendChild(panel);
 
-    document
-        .getElementById("cc-close")
-        .onclick = () => panel.remove();
-
+    document.getElementById("cc-close").onclick = () => {
+        panel.remove();
+    };
 }
